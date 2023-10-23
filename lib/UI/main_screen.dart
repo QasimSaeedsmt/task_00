@@ -5,8 +5,8 @@ import 'package:task_0/logic/shared_preferences_controllers.dart';
 import 'package:task_0/resourses/dimensions_resource.dart';
 import 'package:task_0/resourses/string_resource.dart';
 
-import '../logic/common_keys.dart';
 import '../logic/email_validator.dart';
+import '../resourses/common_keys.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -25,7 +25,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     emailController.dispose();
     passController.dispose();
     nameController.dispose();
@@ -45,14 +44,14 @@ class _MainScreenState extends State<MainScreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      content: const Text("Do you want to log out?"),
-                      title: const Text("Log out"),
+                      content: const Text(LOGOUT_CONFIRMATION),
+                      title: const Text(LOG_OUT),
                       actions: [
                         ElevatedButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: const Text("Cancel")),
+                            child: const Text(CANCEL_TEXT)),
                         ElevatedButton(
                             onPressed: () {
                               logOut();
@@ -62,19 +61,19 @@ class _MainScreenState extends State<MainScreen> {
                                       builder: (context) =>
                                           const SignUpScreen()));
                             },
-                            child: const Text("Log out"))
+                            child: const Text(LOG_OUT))
                       ],
                     );
                   },
                 );
               },
-              child: const Text("Log out")),
+              child: const Text(LOG_OUT)),
           const SizedBox(
             width: DimensResource.D_10,
           ),
           editable
               ? const SizedBox(
-            width: DimensResource.D_45,
+                  width: DimensResource.D_45,
                 )
               : ElevatedButton(
                   onPressed: () async {
@@ -95,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
                       }
                     });
                   },
-                  child: const Text("Edit Profile")),
+                  child: const Text(EDIT_PROFILE_TXT)),
           const SizedBox(width: DimensResource.D_15)
         ],
       ),
@@ -123,7 +122,7 @@ class _MainScreenState extends State<MainScreen> {
                         child: TextFormField(
                           enabled: editable ? true : false,
                           validator: (value) {
-                            if ((value ?? "").isEmpty) {
+                            if ((value ?? EMPTY_STRING).isEmpty) {
                               return EMPTY_EMAIL_MSG;
                             } else if (!isValidEmail(value!)) {
                               return INVALID_EMAIL_MSG;
@@ -150,7 +149,7 @@ class _MainScreenState extends State<MainScreen> {
                         child: TextFormField(
                           enabled: editable ? true : false,
                           validator: (value) {
-                            if ((value ?? "").isEmpty) {
+                            if ((value ?? EMPTY_STRING).isEmpty) {
                               return NAME_ERROR_MSG;
                             }
                             return null;
@@ -162,7 +161,7 @@ class _MainScreenState extends State<MainScreen> {
                                     const BorderSide(color: Colors.blue),
                                 borderRadius:
                                     BorderRadius.circular(DimensResource.D_12)),
-                            hintText: snapshot.data!.getString("name"),
+                            hintText: snapshot.data!.getString(NAME),
                           ),
                           keyboardType: TextInputType.name,
                         ),
@@ -176,9 +175,9 @@ class _MainScreenState extends State<MainScreen> {
                         child: TextFormField(
                           enabled: editable ? true : false,
                           validator: (value) {
-                            if ((value ?? "").isEmpty) {
+                            if ((value ?? EMPTY_STRING).isEmpty) {
                               return EMPTY_PASSWORD_MSG;
-                            } else if (value!.length < 6) {
+                            } else if (value!.length < DimensResource.D_6) {
                               return INVALID_PASSWORD_MSG;
                             }
                             return null;
@@ -196,7 +195,7 @@ class _MainScreenState extends State<MainScreen> {
                                     const BorderSide(color: Colors.blue),
                                 borderRadius:
                                     BorderRadius.circular(DimensResource.D_12)),
-                            hintText: snapshot.data!.getString("Password"),
+                            hintText: snapshot.data!.getString(PASSWORD),
                           ),
                           keyboardType: TextInputType.text,
                         ),
@@ -221,7 +220,7 @@ class _MainScreenState extends State<MainScreen> {
                       });
                     }
                   },
-                  child: const Text("Done"))
+                  child: const Text(DONE_TXT))
               : Container()
         ],
       ),

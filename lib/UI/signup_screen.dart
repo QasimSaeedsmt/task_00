@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_0/UI/main_screen.dart';
 import 'package:task_0/logic/shared_preferences_controllers.dart';
+import 'package:task_0/resourses/common_keys.dart';
 import 'package:task_0/resourses/string_resource.dart';
 
 import '../logic/email_validator.dart';
@@ -56,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Center(
                       child: TextFormField(
                         validator: (value) {
-                          if ((value ?? "").isEmpty) {
+                          if ((value ?? EMPTY_STRING).isEmpty) {
                             return EMPTY_EMAIL_MSG;
                           } else if (!isValidEmail(value!)) {
                             return INVALID_EMAIL_MSG;
@@ -70,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const BorderSide(color: Colors.blue),
                                 borderRadius:
                                     BorderRadius.circular(DimensResource.D_12)),
-                            labelText: "Email"),
+                            labelText: EMAIL_LABEL),
                         keyboardType: TextInputType.emailAddress,
                       ),
                     ),
@@ -82,7 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Center(
                       child: TextFormField(
                         validator: (value) {
-                          if ((value ?? "").isEmpty) {
+                          if ((value ?? EMPTY_STRING).isEmpty) {
                             return NAME_ERROR_MSG;
                           }
                           return null;
@@ -94,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const BorderSide(color: Colors.blue),
                                 borderRadius:
                                     BorderRadius.circular(DimensResource.D_12)),
-                            labelText: "Full Name"),
+                            labelText: NAME_LABEL),
                         keyboardType: TextInputType.name,
                       ),
                     ),
@@ -106,9 +107,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Center(
                       child: TextFormField(
                         validator: (value) {
-                          if ((value ?? "").isEmpty) {
+                          if ((value ?? EMPTY_STRING).isEmpty) {
                             return EMPTY_PASSWORD_MSG;
-                          } else if (value!.length < 6) {
+                          } else if (value!.length < DimensResource.D_6) {
                             return INVALID_PASSWORD_MSG;
                           }
                           return null;
@@ -126,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     const BorderSide(color: Colors.blue),
                                 borderRadius:
                                     BorderRadius.circular(DimensResource.D_12)),
-                            labelText: "Password"),
+                            labelText: PASSWORD),
                         keyboardType: TextInputType.text,
                       ),
                     ),
@@ -147,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           builder: (context) => const MainScreen()));
                 }
               },
-              child: const Text("Sign Up"))
+              child: const Text(SIGNUP_TXT))
         ],
       ),
     );

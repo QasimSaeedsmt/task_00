@@ -1,4 +1,3 @@
-// This file contains all the dimensions used in the application.
 
 class DimensResource {
   static const double D_0 = 0.0;
@@ -9,12 +8,10 @@ class DimensResource {
   static const double D_5 = 5.0;
   static const double D_6 = 6.0;
 
-  // ... continue as needed
   static const double D_10 = 10.0;
   static const double D_12 = 12.0;
   static const double D_15 = 15.0;
   static const double D_20 = 20.0;
 
   static const double D_45 = 45.0;
-// Add other dimensions as your app requires.
 }

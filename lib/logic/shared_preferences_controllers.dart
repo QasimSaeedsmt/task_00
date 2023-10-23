@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'common_keys.dart';
+import '../resourses/common_keys.dart';
 
 signUp(String emailController, String nameController,
     String passController) async {
