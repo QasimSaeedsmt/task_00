@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_0/UI/signup_screen.dart';
 import 'package:task_0/logic/shared_preferences_controllers.dart';
-import 'package:task_0/resourses/dimensions_resource.dart';
-import 'package:task_0/resourses/string_resource.dart';
 
 import '../logic/email_validator.dart';
-import '../resourses/common_keys.dart';
+import '../resources/common_keys.dart';
+import '../resources/dimensions_resource.dart';
+import '../resources/string_resource.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -124,7 +124,7 @@ class _MainScreenState extends State<MainScreen> {
                           validator: (value) {
                             if ((value ?? EMPTY_STRING).isEmpty) {
                               return EMPTY_EMAIL_MSG;
-                            } else if (!isValidEmail(value!)) {
+                            } else if (isValidEmail(value ?? "")) {
                               return INVALID_EMAIL_MSG;
                             }
                             return null;
@@ -136,7 +136,7 @@ class _MainScreenState extends State<MainScreen> {
                                       const BorderSide(color: Colors.blue),
                                   borderRadius: BorderRadius.circular(
                                       DimensResource.D_12)),
-                              hintText: snapshot.data!.getString(EMAIL)),
+                              hintText: snapshot.data?.getString(EMAIL)),
                           keyboardType: TextInputType.emailAddress,
                         ),
                       ),
@@ -161,7 +161,7 @@ class _MainScreenState extends State<MainScreen> {
                                     const BorderSide(color: Colors.blue),
                                 borderRadius:
                                     BorderRadius.circular(DimensResource.D_12)),
-                            hintText: snapshot.data!.getString(NAME),
+                            hintText: snapshot.data?.getString(NAME),
                           ),
                           keyboardType: TextInputType.name,
                         ),
@@ -177,7 +177,8 @@ class _MainScreenState extends State<MainScreen> {
                           validator: (value) {
                             if ((value ?? EMPTY_STRING).isEmpty) {
                               return EMPTY_PASSWORD_MSG;
-                            } else if (value!.length < DimensResource.D_6) {
+                            } else if ((value?.length ?? 0) <
+                                DimensResource.D_6) {
                               return INVALID_PASSWORD_MSG;
                             }
                             return null;
@@ -195,7 +196,7 @@ class _MainScreenState extends State<MainScreen> {
                                     const BorderSide(color: Colors.blue),
                                 borderRadius:
                                     BorderRadius.circular(DimensResource.D_12)),
-                            hintText: snapshot.data!.getString(PASSWORD),
+                            hintText: snapshot.data?.getString(PASSWORD),
                           ),
                           keyboardType: TextInputType.text,
                         ),
@@ -212,7 +213,7 @@ class _MainScreenState extends State<MainScreen> {
           editable
               ? ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+                    if (_formKey.currentState?.validate() ?? false) {
                       signUp(emailController.text, nameController.text,
                           passController.text);
                       setState(() {
