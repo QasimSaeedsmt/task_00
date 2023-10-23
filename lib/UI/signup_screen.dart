@@ -59,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         validator: (value) {
                           if ((value ?? EMPTY_STRING).isEmpty) {
                             return EMPTY_EMAIL_MSG;
-                          } else if (isValidEmail(value ?? "")) {
+                          } else if (!isValidEmail(value ?? "")) {
                             return INVALID_EMAIL_MSG;
                           }
                           return null;

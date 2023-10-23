@@ -124,7 +124,7 @@ class _MainScreenState extends State<MainScreen> {
                           validator: (value) {
                             if ((value ?? EMPTY_STRING).isEmpty) {
                               return EMPTY_EMAIL_MSG;
-                            } else if (isValidEmail(value ?? "")) {
+                            } else if (!isValidEmail(value ?? "")) {
                               return INVALID_EMAIL_MSG;
                             }
                             return null;
