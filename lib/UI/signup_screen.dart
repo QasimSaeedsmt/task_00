@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:task_0/UI/main_screen.dart';
 import 'package:task_0/logic/shared_preferences_controllers.dart';
+import 'package:task_0/resourses/string_resource.dart';
 
 import '../logic/email_validator.dart';
+import '../resourses/dimensions_resource.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -19,6 +21,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool passwordIsVisible = false;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    emailController.dispose();
+    passController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     togglePasswordView() {
       setState(() {
@@ -29,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("Sign Up Screen"),
+        title: const Text(SIGNUP_SCREEN_TITLE),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -40,14 +51,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 12),
+                        horizontal: DimensResource.D_12,
+                        vertical: DimensResource.D_12),
                     child: Center(
                       child: TextFormField(
                         validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter an email';
-                          } else if (!isValidEmail(value)) {
-                            return 'Please enter a valid email';
+                          if ((value ?? "").isEmpty) {
+                            return EMPTY_EMAIL_MSG;
+                          } else if (!isValidEmail(value!)) {
+                            return INVALID_EMAIL_MSG;
                           }
                           return null;
                         },
@@ -56,7 +68,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             border: OutlineInputBorder(
                                 borderSide:
                                     const BorderSide(color: Colors.blue),
-                                borderRadius: BorderRadius.circular(12)),
+                                borderRadius:
+                                    BorderRadius.circular(DimensResource.D_12)),
                             labelText: "Email"),
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -64,12 +77,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 12),
+                        horizontal: DimensResource.D_12,
+                        vertical: DimensResource.D_12),
                     child: Center(
                       child: TextFormField(
                         validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Enter your Full Name";
+                          if ((value ?? "").isEmpty) {
+                            return NAME_ERROR_MSG;
                           }
                           return null;
                         },
@@ -78,7 +92,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             border: OutlineInputBorder(
                                 borderSide:
                                     const BorderSide(color: Colors.blue),
-                                borderRadius: BorderRadius.circular(12)),
+                                borderRadius:
+                                    BorderRadius.circular(DimensResource.D_12)),
                             labelText: "Full Name"),
                         keyboardType: TextInputType.name,
                       ),
@@ -86,14 +101,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 12),
+                        horizontal: DimensResource.D_12,
+                        vertical: DimensResource.D_12),
                     child: Center(
                       child: TextFormField(
                         validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Enter a Password";
-                          } else if (value.length < 6) {
-                            return "Password must be at least 6 characters";
+                          if ((value ?? "").isEmpty) {
+                            return EMPTY_PASSWORD_MSG;
+                          } else if (value!.length < 6) {
+                            return INVALID_PASSWORD_MSG;
                           }
                           return null;
                         },
@@ -108,7 +124,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             border: OutlineInputBorder(
                                 borderSide:
                                     const BorderSide(color: Colors.blue),
-                                borderRadius: BorderRadius.circular(12)),
+                                borderRadius:
+                                    BorderRadius.circular(DimensResource.D_12)),
                             labelText: "Password"),
                         keyboardType: TextInputType.text,
                       ),
@@ -117,7 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               )),
           const SizedBox(
-            height: 20,
+            height: DimensResource.D_20,
           ),
           ElevatedButton(
               onPressed: () {

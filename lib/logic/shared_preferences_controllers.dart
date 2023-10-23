@@ -1,18 +1,20 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'common_keys.dart';
+
 signUp(String emailController, String nameController,
     String passController) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString("email", emailController);
-  prefs.setString("name", nameController);
-  prefs.setString("Password", passController);
-  prefs.setBool("isLogin", true);
+  prefs.setString(EMAIL, emailController);
+  prefs.setString(NAME, nameController);
+  prefs.setString(PASSWORD, passController);
+  prefs.setBool(IS_LOGIN, true);
 }
 
 logOut() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove("name");
-  prefs.remove("email");
-  prefs.remove("Password");
-  prefs.remove("isLogin");
+  prefs.remove(NAME);
+  prefs.remove(EMAIL);
+  prefs.remove(PASSWORD);
+  prefs.remove(IS_LOGIN);
 }

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_0/UI/signup_screen.dart';
 import 'package:task_0/logic/shared_preferences_controllers.dart';
+import 'package:task_0/resourses/dimensions_resource.dart';
+import 'package:task_0/resourses/string_resource.dart';
 
+import '../logic/common_keys.dart';
 import '../logic/email_validator.dart';
 
 class MainScreen extends StatefulWidget {
@@ -21,11 +24,20 @@ class _MainScreenState extends State<MainScreen> {
   bool editable = false;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    emailController.dispose();
+    passController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("Main Screen"),
+        title: const Text(MAIN_SCREEN_TITLE),
         actions: [
           ElevatedButton(
               onPressed: () {
@@ -58,11 +70,11 @@ class _MainScreenState extends State<MainScreen> {
               },
               child: const Text("Log out")),
           const SizedBox(
-            width: 10,
+            width: DimensResource.D_10,
           ),
           editable
               ? const SizedBox(
-                  width: 45,
+            width: DimensResource.D_45,
                 )
               : ElevatedButton(
                   onPressed: () async {
@@ -72,20 +84,19 @@ class _MainScreenState extends State<MainScreen> {
                       editable = true;
                       if (emailController.text.isEmpty) {
                         emailController.text =
-                            prefs.getString("email").toString();
+                            prefs.getString(EMAIL).toString();
                       }
                       if (nameController.text.isEmpty) {
-                        nameController.text =
-                            prefs.getString("name").toString();
+                        nameController.text = prefs.getString(NAME).toString();
                       }
                       if (passController.text.isEmpty) {
                         passController.text =
-                            prefs.getString("Password").toString();
+                            prefs.getString(PASSWORD).toString();
                       }
                     });
                   },
                   child: const Text("Edit Profile")),
-          const SizedBox(width: 15)
+          const SizedBox(width: DimensResource.D_15)
         ],
       ),
       body: Column(
@@ -106,15 +117,16 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 12),
+                          horizontal: DimensResource.D_12,
+                          vertical: DimensResource.D_12),
                       child: Center(
                         child: TextFormField(
                           enabled: editable ? true : false,
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter an email';
-                            } else if (!isValidEmail(value)) {
-                              return 'Please enter a valid email';
+                            if ((value ?? "").isEmpty) {
+                              return EMPTY_EMAIL_MSG;
+                            } else if (!isValidEmail(value!)) {
+                              return INVALID_EMAIL_MSG;
                             }
                             return null;
                           },
@@ -123,21 +135,23 @@ class _MainScreenState extends State<MainScreen> {
                               border: OutlineInputBorder(
                                   borderSide:
                                       const BorderSide(color: Colors.blue),
-                                  borderRadius: BorderRadius.circular(12)),
-                              hintText: snapshot.data!.getString("email")),
+                                  borderRadius: BorderRadius.circular(
+                                      DimensResource.D_12)),
+                              hintText: snapshot.data!.getString(EMAIL)),
                           keyboardType: TextInputType.emailAddress,
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 12),
+                          horizontal: DimensResource.D_12,
+                          vertical: DimensResource.D_12),
                       child: Center(
                         child: TextFormField(
                           enabled: editable ? true : false,
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter your Full Name";
+                            if ((value ?? "").isEmpty) {
+                              return NAME_ERROR_MSG;
                             }
                             return null;
                           },
@@ -146,7 +160,8 @@ class _MainScreenState extends State<MainScreen> {
                             border: OutlineInputBorder(
                                 borderSide:
                                     const BorderSide(color: Colors.blue),
-                                borderRadius: BorderRadius.circular(12)),
+                                borderRadius:
+                                    BorderRadius.circular(DimensResource.D_12)),
                             hintText: snapshot.data!.getString("name"),
                           ),
                           keyboardType: TextInputType.name,
@@ -155,15 +170,16 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 12),
+                          horizontal: DimensResource.D_12,
+                          vertical: DimensResource.D_12),
                       child: Center(
                         child: TextFormField(
                           enabled: editable ? true : false,
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Enter a Password";
-                            } else if (value.length < 6) {
-                              return "Password must be at least 6 characters";
+                            if ((value ?? "").isEmpty) {
+                              return EMPTY_PASSWORD_MSG;
+                            } else if (value!.length < 6) {
+                              return INVALID_PASSWORD_MSG;
                             }
                             return null;
                           },
@@ -178,7 +194,8 @@ class _MainScreenState extends State<MainScreen> {
                             border: OutlineInputBorder(
                                 borderSide:
                                     const BorderSide(color: Colors.blue),
-                                borderRadius: BorderRadius.circular(12)),
+                                borderRadius:
+                                    BorderRadius.circular(DimensResource.D_12)),
                             hintText: snapshot.data!.getString("Password"),
                           ),
                           keyboardType: TextInputType.text,
@@ -191,7 +208,7 @@ class _MainScreenState extends State<MainScreen> {
             },
           ),
           const SizedBox(
-            height: 20,
+            height: DimensResource.D_20,
           ),
           editable
               ? ElevatedButton(
@@ -203,9 +220,6 @@ class _MainScreenState extends State<MainScreen> {
                         editable = false;
                       });
                     }
-                    // setState(() {
-                    //   editable = false;
-                    // });
                   },
                   child: const Text("Done"))
               : Container()
